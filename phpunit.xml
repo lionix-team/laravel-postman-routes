@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit backupGlobals="false"
+     backupStaticAttributes="false"
+     bootstrap="vendor/autoload.php"
+     colors="true"
+     convertErrorsToExceptions="true"
+     convertNoticesToExceptions="true"
+     convertWarningsToExceptions="true"
+     processIsolation="false"
+     stopOnFailure="false">
+    <filter>
+        <whitelist>
+            <directory>./src/</directory>
+        </whitelist>
+    </filter>
+    <testsuites>
+        <testsuite name="Services">
+            <directory suffix="Test.php">./tests/Services</directory>
+        </testsuite>
+        <testsuite name="Console Commands">
+            <directory suffix="Test.php">./tests/Commands</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>

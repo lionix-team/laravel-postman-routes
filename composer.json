@@ -1,0 +1,44 @@
+{
+    "name": "lionix/laravel-postman-routes",
+    "type": "package",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Lionix\\LaravelPostmanRoutes\\": "src/app"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Lionix\\LaravelPostmanRoutes\\Tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Lionix Team",
+            "email": "info@lionix-team.com"
+        },
+        {
+            "name": "Anastas Vartanyan",
+            "email": "vaawebdev@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "guzzlehttp/guzzle": "^6.5",
+        "illuminate/support": "^7.15"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.2",
+        "orchestra/testbench": "^5.3",
+        "facade/ignition": "^2.0",
+        "fzaninotto/faker": "^1.9"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Lionix\\LaravelPostmanRoutes\\ServiceProvider"
+            ]
+        }
+    }
+}
