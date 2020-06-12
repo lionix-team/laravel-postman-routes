@@ -16,4 +16,5 @@ Check this official [manual](https://learning.postman.com/docs/postman/postman-a
 
 ## Testing
 
--   Run `./vendor/bin/phpunit`.
+-   Setup `POSTMAN_API_KEY` environment variable.
+-   Run `./vendor/bin/phpunit` command.

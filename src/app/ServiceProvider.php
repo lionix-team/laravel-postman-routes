@@ -3,8 +3,6 @@
 namespace Lionix\LaravelPostmanRoutes;
 
 use Illuminate\Support\ServiceProvider as Provider;
-use Lionix\LaravelPostmanRoutes\Commands\PostmanRoutesCreateApiCommand;
-use Lionix\LaravelPostmanRoutes\Commands\PostmanRoutesSyncCommand;
 use Lionix\LaravelPostmanRoutes\Contracts\Services\PostmanServiceInterface;
 use Lionix\LaravelPostmanRoutes\Services\PostmanService;
 
@@ -12,11 +10,15 @@ class ServiceProvider extends Provider
 {
     public function register()
     {
+        $this->mergeConfigFrom(
+            dirname(__DIR__) . '/config/postman-routes.php', 'postman-routes'
+        );
+
         $this->app->bind(
             PostmanServiceInterface::class,
             function () {
                 return new PostmanService(
-                    config('postman-routes.api-key', ''),
+                    config('postman-routes.api-key', '')
                 );
             }
         );
