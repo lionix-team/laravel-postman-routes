@@ -4,7 +4,7 @@ namespace Lionix\LaravelPostmanRoutes\Exceptions;
 
 use Exception;
 
-class InvalidPostmanApiKeyException extends Exception
+class PostmanApiUnexpectedResponseException extends Exception
 {
     //
 }
