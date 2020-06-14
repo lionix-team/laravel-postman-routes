@@ -16,10 +16,9 @@ trait GeneratesRoutes
         for ($i = 0; $i < $fakerFactory->numberBetween($from, $to); $i++) {
             $routeUri = $fakerFactory->unique()->slug;
             $routes->push(
-                $this->app['router']
-                    ->get($routeUri, function () {
-                        return 1;
-                    })
+                $this->app['router']->get($routeUri, function () {
+                    return 1;
+                })
             );
         }
 

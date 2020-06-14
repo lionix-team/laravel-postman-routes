@@ -7,7 +7,7 @@ use Lionix\LaravelPostmanRoutes\Exceptions\PostmanApiKeyMissingException;
 
 trait CreatesPostmanService
 {
-    public function createPostmanService(): PostmanServiceInterface
+    public function createPostmanService()
     {
         try {
             $service = app()->make(PostmanServiceInterface::class);

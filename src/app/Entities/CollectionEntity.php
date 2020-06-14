@@ -5,7 +5,7 @@ namespace Lionix\LaravelPostmanRoutes\Entities;
 use Lionix\LaravelPostmanRoutes\Contracts\Entities\CanBeMadeFromStdClassInterface;
 use stdClass;
 
-class CollectionEntity implements CanBeMadeFromStdClassInterface
+class CollectionEntity
 {
     private $id;
 
@@ -19,16 +19,7 @@ class CollectionEntity implements CanBeMadeFromStdClassInterface
         $this->uid = $uid;
         $this->name = $name;
     }
-
-    public static function fromStdClass(stdClass $stdClass)
-    {
-        return new static(
-            $stdClass->id,
-            $stdClass->uid,
-            $stdClass->name
-        );
-    }
-
+    
     public function getId(): string
     {
         return $this->id;

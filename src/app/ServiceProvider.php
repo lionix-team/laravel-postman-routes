@@ -2,6 +2,8 @@
 
 namespace Lionix\LaravelPostmanRoutes;
 
+use GuzzleHttp\Handler\CurlHandler;
+use GuzzleHttp\HandlerStack;
 use Illuminate\Support\ServiceProvider as Provider;
 use Lionix\LaravelPostmanRoutes\Commands\PostmanRoutesMakeCollectionCommand;
 use Lionix\LaravelPostmanRoutes\Contracts\Services\PostmanServiceInterface;
@@ -24,6 +26,12 @@ class ServiceProvider extends Provider
             ->needs('$token')
             ->give(function () {
                 return config('postman-routes.api-key', '');
+            });
+
+        $this->app->when(PostmanService::class)
+            ->needs(HandlerStack::class)
+            ->give(function () {
+                return HandlerStack::create(new CurlHandler());
             });
     }
 

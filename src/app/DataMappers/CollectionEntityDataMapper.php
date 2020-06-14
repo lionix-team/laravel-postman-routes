@@ -1,16 +1,14 @@
 <?php
 
-namespace Lionix\LaravelPostmanRoutes\Services\Traits;
+namespace Lionix\LaravelPostmanRoutes\DataMappers;
 
 use GuzzleHttp\Psr7\Response;
 use Lionix\LaravelPostmanRoutes\Entities\CollectionEntity;
 use Lionix\LaravelPostmanRoutes\Exceptions\PostmanApiUnexpectedResponseException;
-use stdClass;
-use Throwable;
 
-trait MapsResponseToEntities
+class CollectionEntityDataMapper
 {
-    protected function parseResponseBody(Response $response): stdClass
+    public function fromResponse(Response $response): CollectionEntity
     {
         $body = json_decode($response->getBody());
 
@@ -20,18 +18,15 @@ trait MapsResponseToEntities
             );
         }
 
-        return $body;
-    }
-
-    protected function mapResponseToCollectionEntity(Response $response): CollectionEntity
-    {
-        $body = $this->parseResponseBody($response);
-
         try {
-            $collection = CollectionEntity::fromStdClass($body->collection);
+            $collection = new CollectionEntity(
+                $body->collection->id,
+                $body->collection->uid,
+                $body->collection->name
+            );
         } catch (Throwable $th) {
             throw new PostmanApiUnexpectedResponseException(
-                "Could not map the response to collection entity!"
+                "Could not map the response to collection entity"
             );
         }
 

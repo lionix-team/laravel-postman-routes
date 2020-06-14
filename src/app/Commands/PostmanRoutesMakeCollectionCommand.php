@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use Lionix\LaravelPostmanRoutes\Commands\Traits\CollectsApplicationRoutes;
 use Lionix\LaravelPostmanRoutes\Commands\Traits\CreatesPostmanService;
 use Lionix\LaravelPostmanRoutes\Commands\Traits\ProcessesPostmanServiceRequest;
+use Lionix\LaravelPostmanRoutes\DataMappers\RouteEntityDataMapper;
 
 class PostmanRoutesMakeCollectionCommand extends Command
 {
@@ -16,7 +17,7 @@ class PostmanRoutesMakeCollectionCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'postman-routes:make-collection {name} {--filter="/.*/"} {--force}';
+    protected $signature = 'postman-routes:make-collection {name} {--filter=} {--force}';
 
     /**
      * The console command description.
@@ -31,6 +32,22 @@ class PostmanRoutesMakeCollectionCommand extends Command
     protected $service;
 
     /**
+     * @var \Lionix\LaravelPostmanRoutes\DataMappers\RouteEntityDataMapper
+     */
+    protected $routeEntityDataMapper;
+
+    /**
+     * Create a new command instance.
+     *
+     * @return void
+     */
+    public function __construct(RouteEntityDataMapper $routeEntityDataMapper)
+    {
+        $this->routeEntityDataMapper = $routeEntityDataMapper;
+
+        parent::__construct();
+    }
+    /**
      * Execute the console command.
      *
      * @return mixed
@@ -39,7 +56,10 @@ class PostmanRoutesMakeCollectionCommand extends Command
     {
         $this->info(trans('postman-routes::console.collecting-routes'));
 
-        $routes = $this->collectApplicationRoutes($this->option('filter'));
+        $routes = $this->collectApplicationRoutes(
+            $this->routeEntityDataMapper,
+            $this->option('filter')
+        );
 
         if (
             !$this->option('force')
@@ -58,7 +78,7 @@ class PostmanRoutesMakeCollectionCommand extends Command
         $collection = $this->processPostmanServiceRequest(function () use ($routes) {
             return $this->service->createCollection(
                 $this->argument('name'),
-                $routes
+                $routes->toArray()
             );
         });
 

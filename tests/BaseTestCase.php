@@ -3,7 +3,6 @@
 namespace Lionix\LaravelPostmanRoutes\Tests;
 
 use Illuminate\Foundation\Bootstrap\LoadEnvironmentVariables;
-use Illuminate\Support\Str;
 use Lionix\LaravelPostmanRoutes\ServiceProvider;
 use Orchestra\Testbench\TestCase as TestbenchTestCase;
 
@@ -19,7 +18,7 @@ class BaseTestCase extends TestbenchTestCase
         $app->useEnvironmentPath(dirname(__DIR__, 1));
 
         $app->bootstrapWith([LoadEnvironmentVariables::class]);
-        
+
         parent::getEnvironmentSetUp($app);
     }
 
