@@ -13,7 +13,7 @@ trait CollectsApplicationRoutes
         string $filter = null
     ) {
         $collection = collect(Route::getRoutes())
-            ->map([$mapper, 'fromIlluminateRoute']);
+            ->map([$mapper, 'fromRoute']);
 
         if (!is_null($filter)) {
             $collection = $collection->filter(function ($route) use ($filter) {

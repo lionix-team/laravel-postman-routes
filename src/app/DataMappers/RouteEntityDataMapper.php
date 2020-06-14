@@ -2,20 +2,32 @@
 
 namespace Lionix\LaravelPostmanRoutes\DataMappers;
 
-use GuzzleHttp\Psr7\Response;
 use Illuminate\Routing\Route;
-use Lionix\LaravelPostmanRoutes\Entities\CollectionEntity;
+use Lionix\LaravelPostmanRoutes\Contracts\Utils\RouteExtractorInterface;
+use Lionix\LaravelPostmanRoutes\Contracts\Utils\RouteResolverInterface;
 use Lionix\LaravelPostmanRoutes\Entities\RouteEntity;
 
 class RouteEntityDataMapper
 {
-    public function fromIlluminateRoute(Route $route): RouteEntity
+    protected $extractor;
+
+    protected $resolver;
+
+    public function __construct(
+        RouteExtractorInterface $extractor,
+        RouteResolverInterface $resolver
+    ) {
+        $this->extractor = $extractor;
+        $this->resolver = $resolver;
+    }
+
+    public function fromRoute(Route $route): RouteEntity
     {
         return new RouteEntity(
-            $route->getName(),
-            $route->methods()[0],
-            url($route->uri()),
-            []
+            $this->resolver->resolveName($route),
+            $this->resolver->resolveMethod($route),
+            $this->resolver->resolveUrl($route),
+            $this->extractor->extractRequestBody($route)
         );
     }
 

@@ -15,8 +15,8 @@ trait MocksPostmanService
         return new PostmanService(
             Str::random(),
             $handlerStack,
-            new CollectionEntityDataMapper(),
-            new RouteEntityDataMapper(),
+            app()->make(CollectionEntityDataMapper::class),
+            app()->make(RouteEntityDataMapper::class),
         );
     }
 }

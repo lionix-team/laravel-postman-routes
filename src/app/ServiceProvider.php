@@ -2,12 +2,16 @@
 
 namespace Lionix\LaravelPostmanRoutes;
 
-use GuzzleHttp\Handler\CurlHandler;
 use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Handler\CurlHandler;
 use Illuminate\Support\ServiceProvider as Provider;
 use Lionix\LaravelPostmanRoutes\Commands\PostmanRoutesMakeCollectionCommand;
 use Lionix\LaravelPostmanRoutes\Contracts\Services\PostmanServiceInterface;
+use Lionix\LaravelPostmanRoutes\Contracts\Utils\RouteExtractorInterface;
+use Lionix\LaravelPostmanRoutes\Contracts\Utils\RouteResolverInterface;
 use Lionix\LaravelPostmanRoutes\Services\PostmanService;
+use Lionix\LaravelPostmanRoutes\Utils\BaseRouteExtractor;
+use Lionix\LaravelPostmanRoutes\Utils\BaseRouteResolver;
 
 class ServiceProvider extends Provider
 {
@@ -20,6 +24,16 @@ class ServiceProvider extends Provider
         $this->app->bind(
             PostmanServiceInterface::class,
             PostmanService::class
+        );
+
+        $this->app->bind(
+            RouteExtractorInterface::class,
+            BaseRouteExtractor::class
+        );
+
+        $this->app->bind(
+            RouteResolverInterface::class,
+            BaseRouteResolver::class
         );
 
         $this->app->when(PostmanService::class)
